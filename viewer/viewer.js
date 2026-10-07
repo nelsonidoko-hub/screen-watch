@@ -8,7 +8,8 @@
 // minute to wake up on the next connection - if it seems stuck right at
 // the start, that's the wake-up, not a real failure.
 // const SIGNALING_SERVER_URL = 'wss://screen-watch-329x.onrender.com';
-const SIGNALING_SERVER_URL = 'ws://localhost:8080';
+// const SIGNALING_SERVER_URL = 'ws://localhost:8080';
+const SIGNALING_SERVER_URL = 'wss://screen-watch-ppfp.onrender.com';
 // Same TURN/STUN config as the agent - both sides must match, or ICE
 // negotiation can fail. TURN relays traffic when a direct connection isn't
 // possible (different networks/ISPs), which is what lets this work for a

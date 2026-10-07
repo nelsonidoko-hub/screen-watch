@@ -8,7 +8,8 @@
 // about a minute to wake back up on the next connection - if a demo seems
 // stuck right at the start, that's just it waking up, not a real failure.
 // const SIGNALING_SERVER_URL = 'wss://screen-watch-329x.onrender.com';
-const SIGNALING_SERVER_URL = 'ws://localhost:8080';
+// const SIGNALING_SERVER_URL = 'ws://localhost:8080';
+const SIGNALING_SERVER_URL = 'wss://screen-watch-ppfp.onrender.com';
 
 // Public STUN server so peers can discover their public IP/port, plus a
 // TURN server (Open Relay / metered.ca free tier) that relays traffic when

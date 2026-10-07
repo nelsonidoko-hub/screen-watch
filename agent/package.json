@@ -1,0 +1,91 @@
+{
+  "name": "screenwatch-agent",
+  "version": "1.0.0",
+  "description": "Electron agent app - captures the screen and streams it to a viewer via WebRTC",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux",
+    "pack": "electron-builder --dir"
+  },
+  "devDependencies": {
+    "electron": "^32.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "@nut-tree-fork/nut-js": "^4.2.6"
+  },
+  "productName": "ScreenWatch Agent",
+  "author": {
+    "name": "ScreenWatch",
+    "email": "you@example.com"
+  },
+  "build": {
+    "appId": "com.screenwatch.agent",
+    "productName": "ScreenWatch Agent",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer.html",
+      "renderer.js",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/@nut-tree-fork/**/*",
+      "node_modules/@nut-tree-fork/libnut*/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "include": "build/installer.nsh"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.utilities",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "maintainer": "ScreenWatch <you@example.com>"
+    },
+    "protocols": [
+      {
+        "name": "ScreenWatch invite",
+        "schemes": [
+          "screenwatch"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ScreenWatch</title>
+  <style>
+    body {
+      font-family: -apple-system, Segoe UI, sans-serif;
+      background: #111;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0 24px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .view { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 400px; }
+    .view.show { display: flex; }
+    h1 { font-size: 20px; margin: 0 0 10px; }
+    p { color: #aaa; font-size: 14px; line-height: 1.5; margin: 6px 0; }
+    #inviterName { color: #4ade80; }
+    #status { color: #999; font-size: 14px; margin-top: 10px; min-height: 18px; }
+    #timer { color: #f59e0b; font-size: 13px; margin-top: 6px; min-height: 16px; }
+    #idleMsg { color: #f59e0b; font-size: 13px; min-height: 16px; margin-top: 14px; }
+    button { padding: 10px 16px; font-size: 14px; cursor: pointer; border-radius: 6px; border: 1px solid #444; background: #222; color: #eee; }
+    button.primary { background: #16a34a; border-color: #16a34a; color: #fff; font-size: 16px; padding: 14px 20px; }
+    .stack { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 18px; }
+    label { margin-top: 18px; font-size: 14px; color: #ccc; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .warn { font-size: 12px; color: #f59e0b; margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Nothing to do yet -->
+  <div id="idleView" class="view show">
+    <h1>ScreenWatch</h1>
+    <p>Waiting for an invite.</p>
+    <p>Click the invite link you were sent. This window will ask before anything is shared.</p>
+    <div id="idleMsg"></div>
+  </div>
+
+  <!-- 2. Consent: nothing is shared or even connected until a button here is clicked -->
+  <div id="consentView" class="view">
+    <h1><span id="inviterName">Someone</span> wants to see your screen</h1>
+    <p>Only continue if you know this person and expected this request. You can stop at any time.</p>
+    <div class="stack">
+      <button id="shareViewBtn" class="primary">Share my screen</button>
+      <button id="shareControlBtn">Share and let them control my mouse &amp; keyboard</button>
+      <button id="cancelBtn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- 3. Sharing -->
+  <div id="sharingView" class="view">
+    <h1>Sharing your screen</h1>
+    <div id="timer"></div>
+    <div id="status">Connecting...</div>
+    <label>
+      <input type="checkbox" id="controlCheckbox" />
+      Allow remote control (mouse &amp; keyboard)
+    </label>
+    <div class="warn">While this is ticked, the viewer can move your mouse and type on this computer. Untick it to take control back.</div>
+    <div class="stack"><button id="stopBtn">Stop Sharing</button></div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ScreenWatch invite</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, sans-serif; background: #111; color: #eee; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 24px; box-sizing: border-box; text-align: center; }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    p { color: #aaa; line-height: 1.5; max-width: 420px; }
+    a.btn { display: inline-block; margin: 8px; padding: 14px 22px; border-radius: 8px; text-decoration: none; font-size: 16px; background: #222; color: #eee; border: 1px solid #444; }
+    a.primary { background: #16a34a; border-color: #16a34a; color: #fff; }
+    small { color: #777; max-width: 420px; margin-top: 18px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1 id="title">You've been invited to share your screen</h1>
+  <p id="msg">Install the ScreenWatch app if you haven't, then open this invite. The app will ask before anything is shared.</p>
+  <div id="actions" hidden>
+    <a id="openBtn" class="btn primary" href="#">Open ScreenWatch</a>
+    <a id="downloadBtn" class="btn" href="#">Download the app</a>
+  </div>
+  <small>Installed it just now? Come back to this page and click <b>Open ScreenWatch</b>.
+    Nothing is shared until you click <b>Share my screen</b> inside the app.</small>
+
+  <script>
+    // Where people download the installer (e.g. your GitHub Releases page).
+    const DOWNLOAD_URL = 'https://github.com/YOUR-NAME/screenwatch/releases/latest';
+
+    const params = new URLSearchParams(location.hash.slice(1));
+    const token = params.get('t') || '';
+    const name = (params.get('n') || '').slice(0, 40);
+
+    if (!/^[A-Za-z0-9_-]{20,64}$/.test(token)) {
+      document.getElementById('title').textContent = "This invite link isn't valid";
+      document.getElementById('msg').textContent = 'Ask the person who sent it to create a new one.';
+    } else {
+      if (name) document.getElementById('title').textContent = name + ' invited you to share your screen';
+      const deep = 'screenwatch://join?' + new URLSearchParams({ t: token, n: name }).toString();
+      document.getElementById('openBtn').href = deep;
+      document.getElementById('downloadBtn').href = DOWNLOAD_URL;
+      document.getElementById('actions').hidden = false;
+      // Try once automatically. If the app isn't installed, nothing happens
+      // and the buttons above are still there.
+      setTimeout(() => { location.href = deep; }, 600);
+    }
+  </script>
+</body>
+</html>

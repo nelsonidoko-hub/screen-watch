@@ -1,0 +1,37 @@
+name: Build agent installers
+
+# Builds Windows, macOS and Linux installers on their own OS runners.
+# Run it from the Actions tab ("Run workflow"), or push a tag like v1.0.0.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx electron-builder --publish never
+        env:
+          # Unsigned unless you add signing secrets; see README "Packaging".
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent-${{ matrix.os }}
+          path: |
+            agent/dist/*.exe
+            agent/dist/*.dmg
+            agent/dist/*.AppImage
+            agent/dist/*.deb

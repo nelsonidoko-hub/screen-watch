@@ -1,0 +1,9 @@
+{
+  "name": "screenwatch-viewer",
+  "version": "1.0.0",
+  "description": "Static file server for the viewer page, so it can be opened from other devices on the same wifi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

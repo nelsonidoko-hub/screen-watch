@@ -1,0 +1,12 @@
+{
+  "name": "screenwatch-signaling-server",
+  "version": "1.0.0",
+  "description": "WebSocket signaling server that pairs an agent and a viewer using a session code",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
